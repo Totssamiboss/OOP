@@ -1,0 +1,38 @@
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\OopLabApp.exe
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\OopLabApp.deps.json
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\OopLabApp.runtimeconfig.json
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\OopLabApp.dll
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\OopLabApp.pdb
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Александр\OopLabApp\bin\Debug\net10.0-windows\Npgsql.dll
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.csproj.AssemblyReference.cache
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.AssemblyInfoInputs.cache
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.AssemblyInfo.cs
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.csproj.CoreCompileInputs.cache
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.csproj.Up2Date
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.dll
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\refint\OopLabApp.dll
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.pdb
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\OopLabApp.genruntimeconfig.cache
+C:\Users\Александр\OopLabApp\obj\Debug\net10.0-windows\ref\OopLabApp.dll
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\OopLabApp.exe
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\OopLabApp.deps.json
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\OopLabApp.runtimeconfig.json
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\OopLabApp.dll
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\OopLabApp.pdb
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Александр\OopLabApp — копия\bin\Debug\net10.0-windows\Npgsql.dll
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.csproj.AssemblyReference.cache
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.AssemblyInfoInputs.cache
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.AssemblyInfo.cs
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.csproj.CoreCompileInputs.cache
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.csproj.Up2Date
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.dll
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\refint\OopLabApp.dll
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.pdb
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\OopLabApp.genruntimeconfig.cache
+C:\Users\Александр\OopLabApp — копия\obj\Debug\net10.0-windows\ref\OopLabApp.dll
