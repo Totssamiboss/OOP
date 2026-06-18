@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace OopLabApp
-{
+{ 
     public partial class Form1 : Form
     {
         private DatabaseManager dbManager = new DatabaseManager();
@@ -246,7 +246,7 @@ namespace OopLabApp
                 if (currentDevice == null) return;
 
                 string selectedMethod = cmbAction.SelectedItem.ToString();
-                string resultMessage = ""; // Сюда запишем ответ из твоего метода
+                string resultMessage = ""; 
 
                 // Проверяем тип устройства и вызываем ОРИГИНАЛЬНЫЙ метод
                 if (currentDevice is Camera cam)
@@ -254,17 +254,17 @@ namespace OopLabApp
                     switch (selectedMethod)
                     {
                         case "TakePhoto()":
-                            resultMessage = cam.TakePhoto(); // Вызов твоего метода
+                            resultMessage = cam.TakePhoto(); 
                             dbManager.UpdateCameraCharge(cam.Id, cam.Charge); // Сохраняем новый заряд в БД
                             break;
 
                         case "RecordVideo()":
-                            resultMessage = cam.RecordVideo(); // Вызов твоего метода
+                            resultMessage = cam.RecordVideo(); 
                         
                             break;
 
                         case "Recharge()":
-                            resultMessage = cam.Recharge(); // Вызов твоего метода
+                            resultMessage = cam.Recharge();
                             dbManager.UpdateCameraCharge(cam.Id, cam.Charge); // Сохраняем 100% заряд в БД
                             break;
                     }
@@ -274,12 +274,12 @@ namespace OopLabApp
                     switch (selectedMethod)
                     {
                         case "EnableAutoBrightness()":
-                            resultMessage = light.EnableAutoBrightness(); // Вызов твоего метода
+                            resultMessage = light.EnableAutoBrightness(); 
                             dbManager.UpdateLightState(light.Id, light.Brightness, light.ColorTemperature); // Сохраняем яркость 100 в БД
                             break;
 
                         case "SwitchColor()":
-                            resultMessage = light.SwitchColor(); // Вызов твоего метода
+                            resultMessage = light.SwitchColor(); 
                             dbManager.UpdateLightState(light.Id, light.Brightness, light.ColorTemperature); // Сохраняем новый цвет в БД
                             break;
                     }
