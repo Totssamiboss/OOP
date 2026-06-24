@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат работы оборудования</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        body {
+            padding: 20px;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, rgba(255,0,0,0.25), rgba(0,0,255,0.25), rgba(255,255,0,0.25), rgba(0,255,0,0.25));
+            background-size: 400% 400%;
+            animation: gradientAnimation 60s ease infinite;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+        
+        .result-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid #e0e0e0;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .result-header .badge {
+            font-size: 1.2em;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .badge-success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+        }
+        
+        .badge-info {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+        
+        .result-content {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #2c3e50;
+        }
+        
+        .equipment-state {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .equipment-state h5 {
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .equipment-state p {
+            color: #2c3e50;
+            margin: 8px 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            color: #2c3e50;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #d6eaf8;
+            border-color: #3498db;
+        }
+        
+        .d-flex.justify-content-center {
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .action-name {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="result-container">
+            <h1>Результат работы</h1>
+            
+            <div class="result-header">
+                <span class="badge badge-success" th:if="${!result.contains('[X]')}">✓ Успешно</span>
+                <span class="badge badge-info" th:if="${result.contains('[X]')}">⚠ Внимание</span>
+                <div>
+                    <span>Оборудование: </span>
+                    <strong th:text="${equipment.name}"></strong>
+                </div>
+                <div class="action-name" th:if="${action != 'work'}">
+                    Действие: <span th:text="${action}"></span>
+                </div>
+            </div>
+            
+            <div class="result-content" th:text="${result}"></div>
+            
+            <div class="equipment-state">
+                <h5>Текущее состояние оборудования:</h5>
+                <p><strong>ID:</strong> <span th:text="${equipment.id}"></span></p>
+                <p><strong>Тип:</strong> <span th:text="${equipmentType == 'Camera' ? 'Камера 📷' : 'Свет 💡'}"></span></p>
+                <p><strong>Название:</strong> <span th:text="${equipment.name}"></span></p>
+                <p><strong>Серийный номер:</strong> <span th:text="${equipment.serialNumber}"></span></p>
+                
+                <span th:if="${equipmentType == 'Camera'}">
+                    <p><strong>Разрешение:</strong> <span th:text="${equipment.resolution}"></span> MP</p>
+                    <p><strong>Заряд:</strong> <span th:text="${equipment.charge}"></span>%</p>
+                </span>
+                
+                <span th:if="${equipmentType == 'Light'}">
+                    <p><strong>Яркость:</strong> <span th:text="${equipment.brightness}"></span>%</p>
+                    <p><strong>Цветовая температура:</strong> <span th:text="${equipment.colorTemperature}"></span> K</p>
+                </span>
+            </div>
+            
+            <div class="d-flex justify-content-center">
+                <a href="/" class="btn btn-primary">Вернуться к списку</a>
+                <a th:href="@{/work/{id}(id=${equipment.id})}" class="btn btn-secondary">Выбрать другое действие</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

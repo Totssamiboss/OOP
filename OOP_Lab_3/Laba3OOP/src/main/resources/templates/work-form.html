@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор действия для оборудования</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        body {
+            padding: 20px;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, rgba(255,0,0,0.25), rgba(0,0,255,0.25), rgba(255,255,0,0.25), rgba(0,255,0,0.25));
+            background-size: 400% 400%;
+            animation: gradientAnimation 60s ease infinite;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+        
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid #e0e0e0;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .equipment-info {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .equipment-info h5 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .equipment-info p {
+            color: #2c3e50;
+            margin: 5px 0;
+        }
+        
+        .form-label {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .form-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #bdc3c7;
+            color: #2c3e50;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+            color: #2c3e50;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            color: #2c3e50;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #d6eaf8;
+            border-color: #3498db;
+        }
+        
+        .d-flex.justify-content-between {
+            margin-top: 30px;
+        }
+        
+        .action-description {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Выбор действия</h1>
+            
+            <div class="equipment-info">
+                <h5>Оборудование: <span th:text="${equipment.name}"></span></h5>
+                <p><strong>ID:</strong> <span th:text="${equipment.id}"></span></p>
+                <p><strong>Тип:</strong> <span th:text="${equipmentType == 'Camera' ? 'Камера 📷' : 'Свет 💡'}"></span></p>
+                <p><strong>Серийный номер:</strong> <span th:text="${equipment.serialNumber}"></span></p>
+                <p><strong>Помещение:</strong> <span th:text="${equipment.studioRoom != null ? equipment.studioRoom.name : 'Не указано'}"></span></p>
+                
+                <span th:if="${equipmentType == 'Camera'}">
+                    <p><strong>Разрешение:</strong> <span th:text="${equipment.resolution}"></span> MP</p>
+                    <p><strong>Заряд:</strong> <span th:text="${equipment.charge}"></span>%</p>
+                </span>
+                
+                <span th:if="${equipmentType == 'Light'}">
+                    <p><strong>Яркость:</strong> <span th:text="${equipment.brightness}"></span>%</p>
+                    <p><strong>Цветовая температура:</strong> <span th:text="${equipment.colorTemperature}"></span> K</p>
+                </span>
+            </div>
+            
+            <form th:action="@{/work}" method="post">
+                <input type="hidden" name="id" th:value="${equipment.id}">
+                
+                <div class="mb-4">
+                    <label for="action" class="form-label">Выберите действие:</label>
+                    <select class="form-select" id="action" name="action" required>
+                        <option value="">-- Выберите действие --</option>
+                        <option th:each="action : ${availableActions}" 
+                                th:value="${action}" 
+                                th:text="${actionNames.get(action)}">
+                        </option>
+                    </select>
+                </div>
+                
+                <div class="action-description" id="actionDesc">
+                    <p>Выберите действие из списка выше, чтобы увидеть его описание.</p>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="/" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-primary">Выполнить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const descriptions = {
+            'takePhoto': 'Сделает фото и уменьшит заряд батареи на 1%',
+            'recordVideo': 'Начнет запись видео в текущем разрешении',
+            'recharge': 'Полностью зарядит батарею до 100%',
+            'enableAutoBrightness': 'Установит яркость на 100%',
+            'switchColor': 'Переключит цветовую температуру между 3000K и 6000K',
+            'work': 'Запустит стандартный процесс работы оборудования'
+        };
+        
+        document.getElementById('action').addEventListener('change', function() {
+            const action = this.value;
+            const descElement = document.getElementById('actionDesc');
+            
+            if (action && descriptions[action]) {
+                descElement.innerHTML = '<p>' + descriptions[action] + '</p>';
+            } else {
+                descElement.innerHTML = '<p>Выберите действие из списка выше, чтобы увидеть его описание.</p>';
+            }
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

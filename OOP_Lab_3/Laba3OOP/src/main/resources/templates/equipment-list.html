@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Учет оборудования фотостудии</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        body {
+            padding: 20px;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, rgba(255,0,0,0.25), rgba(0,0,255,0.25), rgba(255,255,0,0.25), rgba(0,255,0,0.25));
+            background-size: 400% 400%;
+            animation: gradientAnimation 60s ease infinite;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+        
+        h1 {
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #2c3e50 0%, #3498db 50%, #2c3e50 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border-bottom: 1px solid #e0e0e0;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 15px 20px;
+        }
+        
+        .card-header h5 {
+            color: white;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .equipment-card {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .equipment-card .card {
+            border: none;
+            background: rgba(255, 255, 255, 0.85);
+            border-left: 4px solid #3498db;
+        }
+        
+        .camera-card .card {
+            border-left-color: #2ecc71;
+        }
+        
+        .light-card .card {
+            border-left-color: #f39c12;
+        }
+        
+        .action-btn {
+            margin-right: 8px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            border: none;
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            border: none;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            border: none;
+            color: white;
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            border: none;
+            color: white;
+        }
+        
+        .filter-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #3498db;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        .filter-card .card-body {
+            padding: 15px;
+        }
+        
+        .filter-card .form-select {
+            width: auto;
+            min-width: 200px;
+        }
+        
+        .filter-card .col-form-label {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .btn-add {
+            border: none;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-add:hover {
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+        }
+        
+        .type-badge {
+            font-size: 0.75em;
+            padding: 4px 8px;
+            border-radius: 6px;
+            margin-left: 10px;
+            font-weight: 500;
+            color: white;
+        }
+        
+        .bg-gradient-green {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+        
+        .bg-gradient-orange {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            border-radius: 0.25rem;
+            font-size: 0.75em;
+            font-weight: 500;
+            line-height: 1;
+        }
+        
+        .card-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .card-text {
+            color: #7f8c8d;
+        }
+        
+        .card-text strong {
+            color: #2c3e50;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+            background: #ecf0f1;
+            color: #3498db;
+            border-left: 4px solid #3498db;
+        }
+        
+        .btn-group {
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .col-md-8, .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            
+            .col-md-4 {
+                margin-top: 15px;
+            }
+            
+            .text-end {
+                text-align: center !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Учет оборудования фотостудии</h1>
+        
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card filter-card">
+                    <div class="card-body">
+                        <form method="get" class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <label for="studioRoomFilter" class="col-form-label">Фильтр по помещению:</label>
+                            </div>
+                            <div class="col-auto">
+                                <select class="form-select" id="studioRoomFilter" name="studioRoomId" onchange="this.form.submit()">
+                                    <option value="" th:selected="${selectedStudioRoomId == null}">Все помещения</option>
+                                    <option th:each="room : ${studioRooms}" 
+                                            th:value="${room.id}" 
+                                            th:text="${room.name}"
+                                            th:selected="${room.id == selectedStudioRoomId}"></option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="/add" class="btn btn-primary btn-add">
+                    <i class="bi bi-plus-circle-fill"></i> Добавить оборудование
+                </a>
+                <a href="/rooms" class="btn btn-info btn-add ms-2">
+                    <i class="bi bi-buildings"></i> Помещения
+                </a>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            Список оборудования
+                            <span th:if="${selectedStudioRoomId != null}">
+                                в 
+                                <span th:each="room : ${studioRooms}">
+                                    <span th:if="${room.id == selectedStudioRoomId}" th:text="${room.name}"></span>
+                                </span>
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(equipmentList)}" class="alert alert-info">
+                            Оборудование не найдено. Добавьте первое оборудование.
+                        </div>
+                        
+                        <div th:each="equipment : ${equipmentList}" 
+                             th:class="${'equipment-card ' + (equipment.class.simpleName == 'Camera' ? 'camera-card' : 'light-card')}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5 class="card-title">
+                                                <span th:text="${equipment.name}"></span>
+                                                <span class="badge type-badge" 
+                                                      th:classappend="${equipment.class.simpleName == 'Camera' ? 'bg-gradient-pink' : 'bg-gradient-blue'}"
+                                                      th:text="${equipment.class.simpleName == 'Camera' ? '📷 Камера' : '💡 Свет'}">
+                                                </span>
+                                            </h5>
+                                            <p class="card-text">
+                                                <strong>ID:</strong> <span th:text="${equipment.id}"></span><br>
+                                                <strong>Серийный номер:</strong> <span th:text="${equipment.serialNumber}"></span><br>
+                                                <strong>Помещение:</strong> <span th:text="${equipment.studioRoom != null ? equipment.studioRoom.name : 'Не указано'}"></span><br>
+                                                
+                                                <!-- Специфичные поля для Camera -->
+                                                <span th:if="${equipment.class.simpleName == 'Camera'}">
+                                                    <strong>Разрешение:</strong> 
+                                                    <span th:text="${equipment.resolution}"></span> MP<br>
+                                                    <strong>Заряд:</strong> 
+                                                    <span th:text="${equipment.charge}"></span>%<br>
+                                                </span>
+                                                
+                                                <!-- Специфичные поля для Light -->
+                                                <span th:if="${equipment.class.simpleName == 'Light'}">
+                                                    <strong>Яркость:</strong> 
+                                                    <span th:text="${equipment.brightness}"></span>%<br>
+                                                    <strong>Цветовая температура:</strong> 
+                                                    <span th:text="${equipment.colorTemperature}"></span> K<br>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            <div class="btn-group" role="group">
+                                                <a th:href="@{/work/{id}(id=${equipment.id})}" 
+                                                   class="btn btn-info btn-sm action-btn">
+                                                    <i class="bi bi-play-circle"></i> Работать
+                                                </a>
+                                                <a th:href="@{/edit/{id}(id=${equipment.id})}" 
+                                                   class="btn btn-primary btn-sm action-btn">
+                                                    <i class="bi bi-pencil"></i> Изменить
+                                                </a>
+                                                <a th:href="@{/copy/{id}(id=${equipment.id})}" 
+                                                   class="btn btn-success btn-sm action-btn">
+                                                    <i class="bi bi-copy"></i> Копировать
+                                                </a>
+                                                <a th:href="@{/delete/{id}(id=${equipment.id})}" 
+                                                   class="btn btn-danger btn-sm action-btn"
+                                                   onclick="return confirm('Вы уверены, что хотите удалить это оборудование?')">
+                                                    <i class="bi bi-trash"></i> Удалить
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
